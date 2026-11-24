@@ -1,0 +1,98 @@
+/* Page-level layout for the QALB Spices site. Tokens only (see qalb.css). */
+
+.site-header {
+  padding: var(--space-3) var(--page-margin) 0;
+  text-align: center;
+}
+/* Logo clear space is half its width on every side, per handbook */
+.site-header .qalb-logo { --logo-w: 120px; padding: calc(var(--logo-w) * 0.5); padding-bottom: calc(var(--logo-w) * 0.25); }
+
+.site-nav ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: var(--space-2) var(--space-5);
+}
+.site-nav a {
+  display: inline-flex; align-items: center; min-height: 44px;
+  font: 500 var(--text-label)/1.4 var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--color-text);
+  text-decoration: none;
+}
+.site-nav a:hover { color: var(--color-primary-hover); }
+.site-nav a[aria-current="page"] { color: var(--color-primary); }
+
+.hero { padding-top: var(--space-7); padding-bottom: var(--space-7); }
+@media (min-width: 768px) { .hero { padding-top: var(--space-8); padding-bottom: var(--space-8); } }
+.hero h1 { max-width: 14ch; margin-left: auto; margin-right: auto; }
+.hero p.lead { font-size: 1.125rem; margin-bottom: var(--space-5); color: var(--color-text-muted); }
+
+.section-head { text-align: center; margin-bottom: var(--space-6); }
+.section-head p { margin-left: auto; margin-right: auto; color: var(--color-text-muted); }
+
+.story .qalb-quote { max-width: 32ch; margin: 0 auto var(--space-5); color: var(--color-heading); }
+.story p { color: var(--color-text); }
+
+.values { list-style: none; margin: 0; padding: 0; }
+.values li { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); text-align: center; }
+.values .qalb-icon { color: var(--color-primary); width: 32px; height: 32px; }
+.values p { margin: 0; color: var(--color-text-muted); }
+
+.newsletter-form {
+  display: flex; flex-direction: column; gap: var(--space-3);
+  max-width: 480px; margin: var(--space-5) auto 0;
+}
+.newsletter-form .qalb-btn { align-self: stretch; }
+@media (min-width: 768px) {
+  .newsletter-form { flex-direction: row; align-items: flex-end; }
+  .newsletter-form .qalb-field { flex: 1; }
+  .newsletter-form .qalb-btn { align-self: flex-end; }
+}
+/* Input on a brown band keeps the Warm White fill */
+.qalb-band .qalb-input { border-color: var(--qalb-cream); }
+.qalb-band .qalb-error { color: var(--qalb-cream); }
+
+.site-footer {
+  background: var(--color-bg);
+  padding: var(--space-6) var(--page-margin);
+  text-align: center;
+  font-size: var(--text-min);
+  color: var(--color-text-muted);
+}
+.site-footer p { margin: 0 auto; }
+.site-footer a { color: var(--color-primary); }
+
+/* Product list + imagery */
+.product-list, .ideas { list-style: none; margin: 0; padding: 0; }
+.qalb-card__img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 0;
+  background: var(--color-bg);
+}
+.product-list .qalb-card { height: 100%; }
+.product-meta { font-size: var(--text-min); letter-spacing: 0.01em; }
+.ideas .qalb-card { height: 100%; }
+.ideas .qalb-link { margin-top: auto; align-self: flex-start; }
+
+/* Story split: 3:2 lifestyle image */
+.split { display: grid; gap: var(--space-6); align-items: center; }
+.split__media { margin: 0; }
+.split__media img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 0; }
+.split__text .qalb-quote { margin: 0 0 var(--space-4); max-width: 28ch; color: var(--color-heading); }
+.split__text .qalb-btn { margin-top: var(--space-3); }
+@media (min-width: 1200px) {
+  .split { grid-template-columns: 1fr 1fr; gap: var(--space-8); }
+}
+
+/* Process steps */
+.steps { list-style: none; margin: 0; padding: 0; }
+.steps li { display: flex; flex-direction: column; gap: var(--space-2); }
+.steps p { margin: 0; color: var(--color-text-muted); }
+.steps__num {
+  font: 400 2.5rem/1 var(--font-display);
+  color: var(--color-heading);
+}

@@ -1,0 +1,320 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* QALB Spices design system (Developer Handbook v1.0). Tokens only: no shadows, gradients or #FFFFFF. */
+:root {
+  --qalb-cream: #EDE6D6;
+  --qalb-spice-brown: #843A21;
+  --qalb-clay-brown: #813E2F;
+  --qalb-black: #000000;
+  --qalb-charcoal: #3B3B38;
+  --qalb-warm-white: #FAF6EE;
+  --qalb-turmeric: #C8963E;
+  --qalb-paprika: #A63D2A;
+  --qalb-cardamom: #6B7040;
+
+  --color-bg: var(--qalb-cream);
+  --color-surface: var(--qalb-warm-white);
+  --color-text: var(--qalb-black);
+  --color-text-muted: var(--qalb-charcoal);
+  --color-heading: var(--qalb-spice-brown);
+  --color-primary: var(--qalb-spice-brown);
+  --color-primary-hover: var(--qalb-clay-brown);
+  --color-on-primary: var(--qalb-cream);
+  --color-divider: var(--qalb-clay-brown);
+  --color-error: var(--qalb-paprika);
+  --color-success: var(--qalb-cardamom);
+
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --text-h1: clamp(2.5rem, 4vw + 1rem, 4.5rem);
+  --text-h2: clamp(2rem, 2vw + 1rem, 2.5rem);
+  --text-h3: 1.5rem;
+  --text-body: 1rem;
+  --text-label: 0.8125rem;
+  --text-min: 0.75rem;
+  --tracking-label: 0.3em;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 16px;
+  --space-4: 24px; --space-5: 32px; --space-6: 48px;
+  --space-7: 64px; --space-8: 96px; --space-9: 128px;
+  --page-margin: max(8vw, 24px);
+  --content-max: 1200px;
+  --radius: 2px;
+  --section-pad: var(--space-7);
+}
+@media (min-width: 768px) { :root { --page-margin: 8vw; --section-pad: var(--space-8); } }
+@media (min-width: 1200px) { :root { --section-pad: var(--space-9); } }
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: 400 var(--text-body)/1.5 var(--font-body);
+}
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--color-heading);
+  letter-spacing: 0.01em;
+  margin: 0 0 var(--space-3);
+}
+h1 { font-size: var(--text-h1); line-height: 1.1; }
+h2 { font-size: var(--text-h2); line-height: 1.2; }
+h3 { font-size: var(--text-h3); line-height: 1.3; letter-spacing: 0; }
+p { margin: 0 0 var(--space-3); max-width: 65ch; }
+img { display: block; max-width: 100%; height: auto; }
+:focus-visible { outline: 2px solid var(--qalb-spice-brown); outline-offset: 3px; }
+.on-brown :focus-visible { outline-color: var(--qalb-cream); }
+
+@layer components {
+  .page { padding: var(--space-6) var(--page-margin) var(--section-pad); }
+  .page-narrow { max-width: 520px; margin: 0 auto; }
+  .container-qalb { max-width: var(--content-max); margin: 0 auto; }
+
+  .qalb-label {
+    font: 500 var(--text-label)/1.4 var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+  }
+  .qalb-muted { color: var(--color-text-muted); }
+  .qalb-divider {
+    width: 56px; height: 2px; background: var(--color-divider);
+    border: 0; margin: var(--space-4) 0;
+  }
+  .qalb-divider-center { margin-left: auto; margin-right: auto; }
+  /* Dividers draw themselves in when their section is revealed. */
+  .qalb-divider { transition: width 700ms cubic-bezier(0.2, 0.7, 0.2, 1) 250ms; }
+  [data-reveal="hidden"] .qalb-divider { width: 0; }
+
+  .qalb-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px;
+    background: var(--color-primary); color: var(--color-on-primary);
+    font: 500 var(--text-label)/1 var(--font-body);
+    text-transform: uppercase; letter-spacing: var(--tracking-label);
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--color-primary); border-radius: var(--radius);
+    text-decoration: none; cursor: pointer;
+    position: relative; isolation: isolate; overflow: hidden;
+    transition: color 200ms linear, border-color 200ms linear, opacity 200ms linear, transform 120ms ease-out;
+  }
+  /* Hover: a solid colour wipes across from the left (a flat fill, not a gradient). */
+  .qalb-btn::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: var(--sweep, var(--color-primary-hover));
+    transform: scaleX(0); transform-origin: left center;
+    transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .qalb-btn:hover:not(:disabled)::before { transform: scaleX(1); }
+  .qalb-btn:hover:not(:disabled) { border-color: var(--sweep, var(--color-primary-hover)); }
+  .qalb-btn:active:not(:disabled) { transform: translateY(1px); }
+  .qalb-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .qalb-btn-secondary { --sweep: var(--qalb-spice-brown); background: transparent; color: var(--qalb-spice-brown); border: 1px solid var(--qalb-spice-brown); }
+  .qalb-btn-secondary:hover:not(:disabled) { color: var(--qalb-cream); }
+  .qalb-btn-danger { --sweep: var(--qalb-paprika); background: transparent; color: var(--qalb-paprika); border: 1px solid var(--qalb-paprika); }
+  .qalb-btn-danger:hover:not(:disabled) { color: var(--qalb-cream); }
+  .qalb-btn-small { padding: var(--space-2) var(--space-3); min-height: 44px; }
+
+  .qalb-link {
+    color: var(--color-primary); text-decoration: underline;
+    text-decoration-thickness: 1px; text-underline-offset: 3px;
+    display: inline-flex; align-items: center; min-height: 44px;
+    background: none; border: 0; padding: 0; cursor: pointer; font: inherit;
+  }
+  .qalb-link { transition: color 200ms ease-out, text-underline-offset 200ms ease-out; }
+  .qalb-link:hover { color: var(--color-primary-hover); text-underline-offset: 6px; }
+
+  .qalb-field { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .qalb-field label {
+    font: 500 var(--text-min)/1.4 var(--font-body);
+    text-transform: uppercase; letter-spacing: var(--tracking-label);
+  }
+  .qalb-input {
+    background: var(--color-surface); color: var(--color-text);
+    font: 400 var(--text-body)/1.5 var(--font-body);
+    min-height: 44px; padding: var(--space-2) var(--space-3);
+    border: 1px solid rgba(129, 62, 47, 0.4); border-radius: var(--radius); width: 100%;
+  }
+  .qalb-input { transition: border-color 200ms ease-out, background-color 200ms ease-out; }
+  .qalb-input:hover { border-color: rgba(129, 62, 47, 0.7); }
+  .qalb-input:focus { border-color: var(--color-primary); background: var(--qalb-cream); }
+  .qalb-input[aria-invalid="true"] { border-color: var(--color-error); }
+  .qalb-field label { transition: color 200ms ease-out; }
+  .qalb-field:focus-within label { color: var(--color-primary); }
+  .qalb-field-error {
+    color: var(--color-error); font-size: var(--text-min); margin: 0;
+    display: flex; gap: var(--space-2); align-items: center;
+  }
+  .qalb-hint { font-size: var(--text-min); color: var(--color-text-muted); margin: 0; }
+
+  .qalb-alert {
+    display: flex; gap: var(--space-2); align-items: flex-start;
+    background: var(--color-surface); border: 1px solid currentColor; border-radius: var(--radius);
+    padding: var(--space-3); margin-bottom: var(--space-4); font-size: 0.875rem;
+  }
+  .qalb-alert { animation: qalb-rise 320ms ease-out backwards; }
+  .qalb-alert-error { color: var(--qalb-paprika); }
+  .qalb-alert-success { color: var(--qalb-cardamom); }
+  .qalb-alert p { margin: 0; color: var(--color-text); }
+
+  .qalb-card {
+    background: var(--color-surface); border: 1px solid rgba(129, 62, 47, 0.3);
+    padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3);
+  }
+  /* Cart lines leave by sliding right while the gap closes. */
+  .qalb-line {
+    overflow: hidden;
+    transition:
+      opacity 280ms ease-out, transform 280ms ease-out,
+      max-height 320ms cubic-bezier(0.4, 0, 0.2, 1) 60ms,
+      margin 320ms cubic-bezier(0.4, 0, 0.2, 1) 60ms,
+      padding 320ms cubic-bezier(0.4, 0, 0.2, 1) 60ms;
+  }
+  .qalb-line-out { opacity: 0; transform: translateX(28px); max-height: 0 !important; margin-bottom: 0; padding-top: 0; padding-bottom: 0; border-width: 0; }
+
+  /* Product cards lift a few pixels and pick up a turmeric border. No shadow. */
+  .qalb-card-lift { transition: transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1), border-color 300ms ease-out; }
+  .qalb-card-lift:hover { transform: translateY(-4px); border-color: var(--qalb-turmeric); }
+
+  /* Header links: an underline grows from the left on hover and focus. */
+  .qalb-navlink { position: relative; transition: color 200ms ease-out; }
+  .qalb-navlink::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 1px;
+    background: currentColor; transform: scaleX(0); transform-origin: left center;
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .qalb-navlink:hover::after, .qalb-navlink:focus-visible::after { transform: scaleX(1); }
+
+  /* Reading-progress bar. */
+  .qalb-progress {
+    position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 50;
+    background: var(--qalb-turmeric); transform: scaleX(0); transform-origin: left center;
+    pointer-events: none;
+  }
+  @media (min-width: 768px) { .qalb-card { padding: var(--space-5); } }
+  .qalb-card h3 { margin-bottom: 0; }
+  .qalb-card p { margin: 0; color: var(--color-text-muted); }
+
+  .qalb-badge {
+    display: inline-flex; align-items: center; gap: var(--space-2); align-self: flex-start;
+    background: var(--color-surface);
+    font: 500 var(--text-min)/1.4 var(--font-body);
+    text-transform: uppercase; letter-spacing: var(--tracking-label);
+    padding: var(--space-1) var(--space-2);
+    border: 1px solid currentColor; border-radius: var(--radius);
+  }
+  .qalb-badge-stock { color: var(--qalb-cardamom); }
+  .qalb-badge-sale { color: var(--qalb-paprika); }
+  .qalb-badge-new { color: var(--qalb-charcoal); border-color: var(--qalb-turmeric); }
+
+  .qalb-icon { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+  .qalb-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  .qalb-table th {
+    text-align: left; font: 500 var(--text-min)/1.4 var(--font-body);
+    text-transform: uppercase; letter-spacing: var(--tracking-label);
+    padding: var(--space-3); border-bottom: 1px solid rgba(129, 62, 47, 0.3);
+  }
+  .qalb-table td { padding: var(--space-3); border-bottom: 1px solid rgba(129, 62, 47, 0.3); vertical-align: middle; }
+  .qalb-table tbody tr { transition: background-color 200ms ease-out; }
+  .qalb-table tbody tr:hover { background: var(--qalb-cream); }
+  .qalb-table-wrap { overflow-x: auto; background: var(--color-surface); border: 1px solid rgba(129, 62, 47, 0.3); }
+
+  /* Category tabs: a sliding underline marks the current category. */
+  .qalb-tabs-wrap { margin-bottom: var(--space-5); }
+  .qalb-tabs {
+    position: relative; display: flex; gap: var(--space-2);
+    list-style: none; margin: 0 auto; padding: 0;
+    width: max-content; max-width: 100%;
+    overflow-x: auto; scrollbar-width: none;
+    border-bottom: 1px solid rgba(129, 62, 47, 0.3);
+  }
+  .qalb-tabs::-webkit-scrollbar { display: none; }
+  .qalb-tab {
+    display: inline-flex; align-items: center; min-height: 44px;
+    padding: 0 var(--space-4);
+    font: 400 var(--text-label)/1 var(--font-body);
+    text-transform: uppercase; letter-spacing: var(--tracking-label);
+    color: var(--color-text-muted); text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color 200ms ease-out;
+  }
+  .qalb-tab:hover { color: var(--color-primary); }
+  .qalb-tab[data-active="true"] { color: var(--color-primary); font-weight: 500; }
+  /* Without JavaScript there is no sliding bar, so the active tab draws its own underline. */
+  .qalb-tabs-wrap[data-indicator="off"] .qalb-tab[data-active="true"] { border-bottom-color: var(--color-primary); }
+  .qalb-tab-indicator {
+    position: absolute; left: 0; bottom: 0; height: 2px;
+    background: var(--color-primary);
+    transition: transform 380ms cubic-bezier(0.4, 0, 0.2, 1), width 380ms cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+
+  /* Results area: dims while the next category loads, then the new grid rises in. */
+  .qalb-catalog-view { transition: opacity 220ms ease-out, transform 220ms ease-out; }
+  .qalb-catalog[data-pending="true"] .qalb-catalog-view { opacity: 0.4; transform: translateY(6px); }
+
+  .qalb-stagger > li {
+    animation: qalb-rise 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+
+  /* Product photos ease in slightly on hover. */
+  .qalb-zoom { overflow: hidden; }
+  .qalb-zoom img { transition: transform 600ms ease-out; }
+  .qalb-card:hover .qalb-zoom img { transform: scale(1.04); }
+
+  .qalb-band { background: var(--qalb-spice-brown); color: var(--qalb-cream); }
+  .qalb-band h2 { color: var(--qalb-cream); }
+  .qalb-band a { color: var(--qalb-cream); }
+}
+
+/* Motion. Opacity and position only; no shadows or gradients. */
+@keyframes qalb-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll reveal: Reveal hides below-the-fold content after mount, then shows it on scroll. */
+[data-reveal] {
+  transition:
+    opacity 700ms cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms),
+    transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms);
+}
+[data-reveal="hidden"] { opacity: 0; transform: translateY(28px); }
+[data-reveal="shown"] { opacity: 1; transform: none; }
+
+/* Route change: the incoming page fades in (opacity only, so it never traps fixed elements). */
+@keyframes qalb-fade { from { opacity: 0; } to { opacity: 1; } }
+.qalb-page-in { animation: qalb-fade 420ms ease-out backwards; }
+
+/* Cart count pop when the number changes. */
+@keyframes qalb-pop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.35); color: var(--qalb-turmeric); }
+  100% { transform: scale(1); }
+}
+.qalb-pop { animation: qalb-pop 480ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+::selection { background: var(--qalb-spice-brown); color: var(--qalb-cream); }
+
+/* Page-load entrance for the hero: children rise in one after another. */
+.qalb-intro > * { animation: qalb-rise 800ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.qalb-intro > :nth-child(2) { animation-delay: 120ms; }
+.qalb-intro > :nth-child(3) { animation-delay: 220ms; }
+.qalb-intro > :nth-child(4) { animation-delay: 320ms; }
+.qalb-intro > :nth-child(5) { animation-delay: 420ms; }
+
+.skip-link {
+  position: absolute; left: var(--space-3); top: -100px;
+  background: var(--color-primary); color: var(--color-on-primary);
+  padding: var(--space-3) var(--space-4); z-index: 10;
+}
+.skip-link:focus { top: var(--space-3); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

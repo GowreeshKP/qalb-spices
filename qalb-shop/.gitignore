@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+.env
+.env.local
+*.db
+*.db-journal
+uploads
+test-results
+playwright-report
+next-env.d.ts
+*.tsbuildinfo
+tests/.tmp-uploads
+tests/.e2e-uploads
